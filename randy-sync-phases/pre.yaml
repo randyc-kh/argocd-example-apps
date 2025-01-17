@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Jobs
+metadata:
+  name: sync-phases
+  namespace: sync-phases
+  annotations:
+    argocd.argoproj.io/hook: "PreSync"
+    argocd.argoproj.io/hook-delete-policy: "HookSucceeded"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/randyc-kh/argocd-example-apps.git
+    targetRevision: HEAD
+    path: randy-sync-phases
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: sync-phases
+    
